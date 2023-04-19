@@ -31,7 +31,7 @@ export const signUp = async (req, res, next) => {
     } catch (err) {
         console.log(err);
     }
-    return res.status(201).json({ user })
+    return res.status(201).json({ user, message: "User created successfully" })
 }
 
 export const login = async (req, res, next) => {
@@ -51,5 +51,5 @@ export const login = async (req, res, next) => {
     if (!isPasswordCorrect) {
         return res.status(400).json({ message: "Incorrect password" })
     }
-    return res.status(200).json({ message: "Login Successfull" })
+    return res.status(200).json({ message: "Login Successfull", user: userExists })
 }
