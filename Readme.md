@@ -2,8 +2,8 @@
 
 This is a full-stack web application built with the MERN stack that allows users to create, view, edit, and delete their blogs. The frontend is built with React and Redux for state management, while the backend is built with Node.js and Express, using MongoDB as the database.
 
-![](/frontEnd/public/blogAuth.png)
-![](/frontEnd/public/blog.png)
+![](/frontend/public/blogAuth.png)
+![](/frontend/public/blog.png)
 
 ## Features
 - User authentication: users can create an account and login to access their blogs
