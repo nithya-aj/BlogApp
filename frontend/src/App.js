@@ -14,11 +14,11 @@ function App() {
   const isLoggedIn = useSelector(state => state.isLoggedIn)
   console.log(isLoggedIn);
 
-  useEffect(()=>{
-    if(localStorage.getItem("userId")){
+  useEffect(() => {
+    if (localStorage.getItem("userId")) {
       dispatch(authActions.login())
     }
-  },[dispatch])
+  }, [dispatch])
 
   return (
     <>
@@ -28,7 +28,10 @@ function App() {
         </header>}
       <main>
         <Routes>
-          {!isLoggedIn ? <Route path='/auth' element={<Auth />} /> :
+          {!isLoggedIn ?
+            <>
+              <Route path="/" element={<Auth />} />
+              <Route path='/auth' element={<Auth />} /> </> :
             <>
               <Route path='/blogs' element={<Blogs />} />
               <Route path="/blogs/add" element={<AddBlog />} />
