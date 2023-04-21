@@ -8,7 +8,7 @@ import IconButton from '@mui/material/IconButton';
 import MenuIcon from '@mui/icons-material/Menu';
 import { Tab, Tabs } from '@mui/material';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { authActions } from '../store';
 
@@ -17,6 +17,7 @@ const appBarStyle = { background: "linear-gradient(90deg, rgba(3,11,27,1) 0%, rg
 const Header = () => {
 
   const dispatch = useDispatch()
+  const navigate = useNavigate()
   const [value, setValue] = React.useState(0);
   const handleChange = (event, newValue) => {
     setValue(newValue);
@@ -29,6 +30,12 @@ const Header = () => {
       }
     }
   })
+
+  const handleLogout = () => {
+    localStorage.removeItem("userId");
+    dispatch(authActions.logout());
+    navigate("/auth");
+  };
 
   return (
     <Box sx={{ flexGrow: 1 }}>
@@ -53,8 +60,7 @@ const Header = () => {
               <Tab LinkComponent={Link} to='/blogs/add' sx={{ color: 'white' }} label="Add Blog" />
             </Tabs>
           </ThemeProvider>
-
-          <Button LinkComponent={Link} to='/auth' variant="outlined" color="inherit" sx={{ borderColor: '#fb8c00' }} onClick={() => dispatch(authActions.logout())}>Logout</Button>
+          <Button variant="outlined" color="inherit" onClick={handleLogout} sx={{ borderColor: '#fb8c00' }}>Logout</Button>
           {/* <>
             <Button LinkComponent={Link} to='/auth' variant="outlined" color="inherit" sx={{ margin: '1rem', borderColor: '#fb8c00' }}>Login</Button>
             <Button LinkComponent={Link} to='/auth' variant="outlined" color="inherit" sx={{ marginRight: '1rem', borderColor: '#fb8c00' }}>Register</Button>

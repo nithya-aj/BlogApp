@@ -35,9 +35,9 @@ const Blogs = () => {
     <Box sx={{ margin: '2rem' }}>
       <Grid container spacing={2} sx={{ flexGrow: 1 }}>
         {blogs && blogs.map((blog, index) => (
-          <Grid xs={4}>
+          <Grid xs={12}>
             <Item>
-              <Blog title={blog.title} desc={blog.desc} imageUrl={blog.imageUrl} userName={blog.user.name} />
+              <Blog id={blog._id} isUser={localStorage.getItem("userId")=== blog.user._id} title={blog.title} desc={blog.desc} imageUrl={blog.image} userName={blog.user.name} />
             </Item>
           </Grid>
         ))}

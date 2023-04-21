@@ -26,7 +26,6 @@ function Auth() {
       password: inputs.password
     }).catch(err => console.log(err))
     const data = await res.data
-    console.log(data, 'dataaaaaaaaaaaaaa');
     return data
   }
 
@@ -104,30 +103,3 @@ function Auth() {
 }
 
 export default Auth;
-
-// import { Box, Button, TextField, Typography } from '@mui/material'
-// import React, { useState } from 'react'
-
-// const Auth = () => {
-
-//   const [isSignup, setIsSignup] = useState(true)
-
-//   return (
-//     <div>
-//       <form>
-//         <Box display='flex' flexDirection={'column'} alignItems={'center'} justifyContent={'center'} boxShadow={'10px 10px 20px #ccc'}
-//           padding={3} margin={'auto'} marginTop={5} borderRadius={5} maxWidth={400}
-//         >
-//           <Typography padding={3} textAlign={'center'}>{isSignup ? "SignUp" : "Login"}</Typography>
-//           {isSignup && <TextField placeholder='Name' margin='normal'></TextField>}
-//           <TextField placeholder='Email' margin='normal'></TextField>
-//           <TextField placeholder='Password' margin='normal'></TextField>
-//           <Button>Submit</Button>
-//           <Button onClick={() => setIsSignup(!isSignup)} >Change to {isSignup ? "Login" : "Signup"}</Button>
-//         </Box>
-//       </form>
-//     </div>
-//   )
-// }
-
-// export default Auth

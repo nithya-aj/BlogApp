@@ -19,6 +19,10 @@ import CardActions from '@mui/material/CardActions';
 import Collapse from '@mui/material/Collapse';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import { styled } from '@mui/material/styles';
+import Menu from '@mui/material/Menu';
+import MenuItem from '@mui/material/MenuItem';
+import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
 
 const ExpandMore = styled((props) => {
     const { expand, ...other } = props;
@@ -31,7 +35,16 @@ const ExpandMore = styled((props) => {
     }),
 }));
 
-const Blog = ({title, desc, imageUrl, userName}) => {
+const Blog = ({ title, desc, imageUrl, userName, isUser, id }) => {
+    const navigate = useNavigate()
+    const [anchorEl, setAnchorEl] = React.useState(null);
+    const open = Boolean(anchorEl);
+    const handleClick = (event) => {
+        setAnchorEl(event.currentTarget);
+    };
+    const handleClose = () => {
+        setAnchorEl(null);
+    };
 
     const [expanded, setExpanded] = React.useState(false);
 
@@ -39,12 +52,32 @@ const Blog = ({title, desc, imageUrl, userName}) => {
         setExpanded(!expanded);
     };
 
+    const handleEdit = () => {
+        navigate(`/myBlogs/${id}`)
+    }
+
+    const deleteRequest = async () => {
+        const res = await axios.delete(`http://localhost:5000/api/blog/${id}`)
+            .catch(err => console.log(err))
+        const data = await res.data
+        return data
+    }
+
+    const handleDelete = () => {
+        handleClose()
+        deleteRequest().then(() => navigate('/')).then(() => navigate('/blogs'))
+    }
+
     return (
         <Card
             variant="outlined"
             sx={{
                 minWidth: 300,
                 '--Card-radius': (theme) => theme.vars.radius.xs,
+                width: "50%",
+                margin: 'auto',
+                mt: 2,
+                padding: 2
             }}
         >
             <Box sx={{ display: 'flex', alignItems: 'center', pb: 1.5, gap: 1 }}>
@@ -72,13 +105,29 @@ const Blog = ({title, desc, imageUrl, userName}) => {
                     />
                 </Box>
                 <Typography fontWeight="lg">{userName}</Typography>
-                <IconButton variant="plain" color="neutral" size="sm" sx={{ ml: 'auto' }}>
-                    <MoreHoriz />
-                </IconButton>
+                {isUser && <IconButton variant="plain" color="neutral" size="sm" sx={{ ml: 'auto' }}>
+                    <MoreHoriz
+                        aria-controls={open ? 'basic-menu' : undefined}
+                        aria-haspopup="true"
+                        aria-expanded={open ? 'true' : undefined}
+                        onClick={handleClick} />
+                    <Menu
+                        id="basic-menu"
+                        anchorEl={anchorEl}
+                        open={open}
+                        onClose={handleClose}
+                        MenuListProps={{
+                            'aria-labelledby': 'basic-button',
+                        }}
+                    >
+                        <MenuItem onClick={handleEdit}>Edit post</MenuItem>
+                        <MenuItem onClick={handleDelete}>Delete post</MenuItem>
+                    </Menu>
+                </IconButton>}
             </Box>
             <CardOverflow>
                 <AspectRatio>
-                    <img src={imageUrl} alt="" loading="lazy" />
+                    <img src={imageUrl} alt="blog_image" loading="lazy" />
                 </AspectRatio>
             </CardOverflow>
             <Box sx={{ display: 'flex', alignItems: 'center', mx: -1, my: 1 }}>
@@ -112,7 +161,7 @@ const Blog = ({title, desc, imageUrl, userName}) => {
                     </IconButton>
                 </Box>
             </Box>
-            <Link
+            {/* <Link
                 component="button"
                 underline="none"
                 fontSize="sm"
@@ -120,7 +169,7 @@ const Blog = ({title, desc, imageUrl, userName}) => {
                 textColor="text.primary"
             >
                 8.1M Likes
-            </Link>
+            </Link> */}
             <Typography fontSize="sm">
                 <Link
                     component="button"
@@ -132,7 +181,7 @@ const Blog = ({title, desc, imageUrl, userName}) => {
                 </Link>{' '}
                 {desc}
             </Typography>
-            <Link
+            {/* <Link
                 component="button"
                 underline="none"
                 fontSize="sm"
@@ -140,16 +189,16 @@ const Blog = ({title, desc, imageUrl, userName}) => {
                 sx={{ color: 'text.tertiary' }}
             >
                 more
-            </Link>
-            <Link
+            </Link> */}
+            {/* <Link
                 component="button"
                 underline="none"
                 fontSize="10px"
                 sx={{ color: 'text.tertiary', my: 0.5 }}
             >
                 2 DAYS AGO
-            </Link>
-            <CardOverflow sx={{ p: 'var(--Card-padding)', display: 'flex' }}>
+            </Link> */}
+            {/* <CardOverflow sx={{ p: 'var(--Card-padding)', display: 'flex' }}>
                 <IconButton size="sm" variant="plain" color="neutral" sx={{ ml: -1 }}>
                     <Face />
                 </IconButton>
@@ -162,8 +211,8 @@ const Blog = ({title, desc, imageUrl, userName}) => {
                 <Link disabled underline="none" role="button">
                     Post
                 </Link>
-            </CardOverflow>
-            <CardActions disableSpacing>
+            </CardOverflow> */}
+            {/* <CardActions disableSpacing>
                 <ExpandMore
                     expand={expanded}
                     onClick={handleExpandClick}
@@ -198,10 +247,9 @@ const Blog = ({title, desc, imageUrl, userName}) => {
                         minutes more. (Discard any mussels that don&apos;t open.)
                     </Typography>
                     <Typography>
-                        Set aside off of the heat to let rest for 10 minutes, and then serve.
                     </Typography>
                 </CardContent>
-            </Collapse>
+            </Collapse> */}
         </Card>
     )
 }

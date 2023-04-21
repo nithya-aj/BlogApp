@@ -38,7 +38,7 @@ const UserBlogs = () => {
         {blogs && blogs.map((blog, index) => (
           <Grid xs={4}>
             <Item>
-              <Blog title={blog.title} desc={blog.desc} imageUrl={blog.imageUrl} userName={blog.user.name} />
+              <Blog id={blog._id} isUser={true} title={blog.title} desc={blog.desc} imageUrl={blog.image} userName={blog.user.name} />
             </Item>
           </Grid>
         ))}
